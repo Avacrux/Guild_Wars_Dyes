@@ -19,7 +19,7 @@ import org.json.JSONObject;
 public class ImageAdapter extends BaseAdapter
 {
     private Context mContext;
-    private Object[] dyeList;
+    public Object[] dyeList;
 
     public ImageAdapter(Context c)
     {
@@ -53,6 +53,8 @@ public class ImageAdapter extends BaseAdapter
         return 0;
     }
 
+
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent)
     {
@@ -68,20 +70,18 @@ public class ImageAdapter extends BaseAdapter
         }
         else
         {
-            dye = (DyeColor)convertView;
+            dye = (DyeColor) convertView;
         }
 
-        JSONObject jo =(JSONObject) dyeList[position];
-
-
+        JSONObject jo = (JSONObject) dyeList[position];
 
         try
         {
             Log.i("jo printout:", jo.toString());
             JSONObject leather = jo.getJSONObject("leather");
-            Log.i("leather:",leather.toString());
+            Log.i("leather:", leather.toString());
             JSONArray rgb = leather.getJSONArray("rgb");
-            Log.i("rgb:",rgb.toString());
+            Log.i("rgb:", rgb.toString());
             int r;
             int g;
             int b;
@@ -94,18 +94,14 @@ public class ImageAdapter extends BaseAdapter
 
             Color c = new Color();
 
-            dye.setBackgroundColor(c.rgb(r,g,b));
-
+            dye.setBackgroundColor(c.rgb(r, g, b));
 
         } catch (JSONException e)
         {
             e.printStackTrace();
         }
 
-        //dye.setImageResource(mThumbIds[position]);
-        //dye.setBackgroundColor(c);
         return dye;
-
 
     }
 

@@ -9,6 +9,9 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class MainActivity extends Activity
 {
 
@@ -29,14 +32,28 @@ public class MainActivity extends Activity
             public void run()
             {
                 GridView gridView = (GridView) findViewById(R.id.gridView1);
-                gridView.setAdapter(new ImageAdapter(MainActivity.this));
+                final ImageAdapter adapter = new ImageAdapter(MainActivity.this);
+
+                gridView.setAdapter(adapter);
 
                 gridView.setOnItemClickListener(new AdapterView.OnItemClickListener()
                 {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id)
                     {
-                        Toast.makeText(MainActivity.this, "" + position, Toast.LENGTH_SHORT).show();
+                        JSONObject jo = (JSONObject) adapter.dyeList[position];
+                        String name;
+                        try
+                        {
+                            name = (jo.get("name")).toString();
+                            adapter.getItem(position);
+                            Toast.makeText(MainActivity.this, "" + name, Toast.LENGTH_SHORT).show();
+                        } catch (JSONException e)
+                        {
+                            e.printStackTrace();
+                        }
+
+
                     }
                 });
 
