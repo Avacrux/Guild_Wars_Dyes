@@ -19,26 +19,16 @@ import org.json.JSONObject;
 public class ImageAdapter extends BaseAdapter
 {
     private Context mContext;
-    public Object[] dyeList;
 
     public ImageAdapter(Context c)
     {
         mContext = c;
-        dyeList = generateDyeList();
-
-    }
-
-    private Object[] generateDyeList()
-    {
-
-        return (DyeJsonDownloader.dyeObjectList).values().toArray();
-
     }
 
     @Override
     public int getCount()
     {
-        return DyeJsonDownloader.dyeObjectList.size();
+        return DyeSorter.sortedList.size();
     }
 
     @Override
@@ -52,8 +42,6 @@ public class ImageAdapter extends BaseAdapter
     {
         return 0;
     }
-
-
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent)
@@ -73,24 +61,23 @@ public class ImageAdapter extends BaseAdapter
             dye = (DyeColor) convertView;
         }
 
-        JSONObject jo = (JSONObject) dyeList[position];
-
         try
         {
-            Log.i("jo printout:", jo.toString());
+            JSONObject jo = (JSONObject) DyeSorter.sortedList.get(position);
+           // Log.i("jo printout:", jo.toString());
             JSONObject leather = jo.getJSONObject("leather");
-            Log.i("leather:", leather.toString());
+           // Log.i("leather:", leather.toString());
             JSONArray rgb = leather.getJSONArray("rgb");
-            Log.i("rgb:", rgb.toString());
+            //Log.i("rgb:", rgb.toString());
             int r;
             int g;
             int b;
             r = rgb.getInt(0);
             g = rgb.getInt(1);
             b = rgb.getInt(2);
-            Log.i("r:", String.valueOf(r));
-            Log.i("g:", String.valueOf(g));
-            Log.i("b:", String.valueOf(b));
+            //Log.i("r:", String.valueOf(r));
+            //Log.i("g:", String.valueOf(g));
+           // Log.i("b:", String.valueOf(b));
 
             Color c = new Color();
 
@@ -100,9 +87,16 @@ public class ImageAdapter extends BaseAdapter
         {
             e.printStackTrace();
         }
+        catch (ArrayIndexOutOfBoundsException e)
+        {
+            e.printStackTrace();
+            Log.i("thing:",Integer.toString(position));
+        }
 
         return dye;
 
     }
+
+
 
 }

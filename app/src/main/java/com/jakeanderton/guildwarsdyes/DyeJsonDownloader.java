@@ -1,7 +1,6 @@
 package com.jakeanderton.guildwarsdyes;
 
 import android.os.AsyncTask;
-import android.util.Log;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -17,24 +16,23 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.Iterator;
 
 /**
  * Created by Jake on 03/09/2015.
  */
-public class DyeJsonDownloader extends AsyncTask<Void,Void,Void>
+public class DyeJsonDownloader extends AsyncTask<Void, Void, Void>
 {
     public MainActivity mainActivity;
     public static JSONObject colorsObject;
-    public static HashMap<Integer,JSONObject> dyeObjectList;
+    public static ArrayList<JSONObject> dyeObjectList;
 
     public DyeJsonDownloader(MainActivity m)
     {
         mainActivity = m;
 
     }
-
 
     @Override
     @SuppressWarnings("deprecation")
@@ -53,20 +51,21 @@ public class DyeJsonDownloader extends AsyncTask<Void,Void,Void>
         InputStream inputStream;
 
         //try to send http request
-        try{
+        try
+        {
             HttpResponse response = httpClient.execute(httpGet);
-            HttpEntity entity  = response.getEntity();
+            HttpEntity entity = response.getEntity();
 
             inputStream = entity.getContent();
 
-            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream,"UTF-8"),8);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"), 8);
 
             StringBuilder stringBuilder = new StringBuilder();
             String line = null;
 
-            while((line = reader.readLine()) != null)
+            while ((line = reader.readLine()) != null)
             {
-                Log.i("Line:",line);
+                // Log.i("Line:",line);
                 stringBuilder.append(line);
             }
 
@@ -78,26 +77,26 @@ public class DyeJsonDownloader extends AsyncTask<Void,Void,Void>
 
             //TODO: need to iterate through the objects of colors object using colorsobject.getJsonObject(index.tostring) for each color
 
-            dyeObjectList = new HashMap<>();
+            dyeObjectList = new ArrayList<>();
             //JSONObject[] dyeObjectList = new JSONObject[total];
 
             Iterator keys = colorsObject.keys();
 
-            while(keys.hasNext())
+            while (keys.hasNext())
             {
-                String key = (String)keys.next();
+                String key = (String) keys.next();
                 JSONObject jsonObject = colorsObject.getJSONObject(key);
-                Log.i("Print out: ", jsonObject.toString());
-                dyeObjectList.put(Integer.parseInt(key), jsonObject);
+                // Log.i("Print out: ", jsonObject.toString());
+                dyeObjectList.add(jsonObject);
 
             }
+            mainActivity.startSorter();
 
-           mainActivity.createGridView();
+
+
 
             //Log.i("length: ",Integer.toString(colorsObject.length()));
             //Log.i("Print out: ",colorsObject.toString());
-
-
 
         } catch (UnsupportedEncodingException e)
         {

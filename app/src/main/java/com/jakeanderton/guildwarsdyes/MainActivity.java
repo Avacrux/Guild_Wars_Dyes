@@ -1,7 +1,7 @@
 package com.jakeanderton.guildwarsdyes;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,8 +12,10 @@ import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class MainActivity extends Activity
+public class MainActivity extends ActionBarActivity
 {
+    DyeSorter sorter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -22,6 +24,11 @@ public class MainActivity extends Activity
         setContentView(R.layout.activity_main);
         new DyeJsonDownloader(this).execute();
 
+    }
+
+    public void startSorter()
+    {
+        sorter = new DyeSorter(this);
     }
 
     public void createGridView()
@@ -41,7 +48,7 @@ public class MainActivity extends Activity
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id)
                     {
-                        JSONObject jo = (JSONObject) adapter.dyeList[position];
+                        JSONObject jo = (JSONObject) DyeSorter.sortedList.get(position);
                         String name;
                         try
                         {
