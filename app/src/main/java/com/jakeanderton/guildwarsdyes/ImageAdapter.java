@@ -21,7 +21,7 @@ public class ImageAdapter extends BaseAdapter
     private Context mContext;
     private int mode = 0;
 
-    public ImageAdapter(Context c,int m)
+    public ImageAdapter(Context c, int m)
     {
         mContext = c;
         mode = m;
@@ -37,6 +37,60 @@ public class ImageAdapter extends BaseAdapter
     public Object getItem(int position)
     {
         return null;
+    }
+
+    public int getColorLeather(int position)
+    {
+        try
+        {
+            JSONObject jo;
+            if (mode == 1)//colour order
+            {
+                jo = (JSONObject) DyeSorter.sortedList.get(position);
+                // Log.i("color order","" +jo.getString("name"));
+
+            }
+            else if (mode == 2)//alphabetical
+            {
+                jo = (JSONObject) DyeSorter.alphabetaSortedList.get(position);
+            }
+            else
+            {
+                jo = new JSONObject();
+            }
+
+            // Log.i("jo printout:", jo.toString());
+            JSONObject leather = jo.getJSONObject("leather");
+            // Log.i("leather:", leather.toString());
+            JSONArray rgb = leather.getJSONArray("rgb");
+            //Log.i("rgb:", rgb.toString());
+            int r;
+            int g;
+            int b;
+            r = rgb.getInt(0);
+            g = rgb.getInt(1);
+            b = rgb.getInt(2);
+            //Log.i("r:", String.valueOf(r));
+            //Log.i("g:", String.valueOf(g));
+            // Log.i("b:", String.valueOf(b));
+
+            Color c = new Color();
+            int i = c.rgb(r, g, b);
+            //dye.setBackgroundColor(c.rgb(r, g, b));
+            return i;
+
+
+
+        } catch (JSONException e)
+        {
+            e.printStackTrace();
+        } catch (ArrayIndexOutOfBoundsException e)
+        {
+            e.printStackTrace();
+            Log.i("thing:", Integer.toString(position));
+        }
+        return 0;
+
     }
 
     @Override
@@ -63,57 +117,10 @@ public class ImageAdapter extends BaseAdapter
             dye = (DyeColor) convertView;
         }
 
-        try
-        {
-            JSONObject jo;
-            if(mode == 1)//colour order
-            {
-                 jo = (JSONObject) DyeSorter.sortedList.get(position);
-              // Log.i("color order","" +jo.getString("name"));
-
-            }
-            else if(mode == 2)//alphabetical
-            {
-                 jo = (JSONObject) DyeSorter.alphabetaSortedList.get(position);
-            }
-            else
-            {
-                jo = new JSONObject();
-            }
-
-           // Log.i("jo printout:", jo.toString());
-            JSONObject leather = jo.getJSONObject("leather");
-           // Log.i("leather:", leather.toString());
-            JSONArray rgb = leather.getJSONArray("rgb");
-            //Log.i("rgb:", rgb.toString());
-            int r;
-            int g;
-            int b;
-            r = rgb.getInt(0);
-            g = rgb.getInt(1);
-            b = rgb.getInt(2);
-            //Log.i("r:", String.valueOf(r));
-            //Log.i("g:", String.valueOf(g));
-           // Log.i("b:", String.valueOf(b));
-
-            Color c = new Color();
-
-            dye.setBackgroundColor(c.rgb(r, g, b));
-
-        } catch (JSONException e)
-        {
-            e.printStackTrace();
-        }
-        catch (ArrayIndexOutOfBoundsException e)
-        {
-            e.printStackTrace();
-            Log.i("thing:",Integer.toString(position));
-        }
+        dye.setBackgroundColor(getColorLeather(position));
 
         return dye;
 
     }
-
-
 
 }

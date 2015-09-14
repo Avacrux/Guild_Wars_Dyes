@@ -46,4 +46,10 @@ public class AlphabetaActivity extends ActionBarActivity
 
     }
 
+
+    protected void onStop()
+    {
+        super.onStop();
+    }
+
 }

@@ -1,8 +1,11 @@
 package com.jakeanderton.guildwarsdyes;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -55,6 +58,28 @@ public class MainActivity extends ActionBarActivity
                         {
                             name = (jo.get("name")).toString();
                             adapter.getItem(position);
+                            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                            LayoutInflater factory = LayoutInflater.from(MainActivity.this);
+                            //View v = factory.inflate(R.layout.alert_popup, null);
+
+                            DyeColor d = new DyeColor(MainActivity.this);
+
+                            d.setBackgroundColor(adapter.getColorLeather(position));
+
+                            builder.setView(d);
+
+                            builder.setTitle(name);
+                            builder.setNegativeButton("Close", new DialogInterface.OnClickListener()
+                            {
+                                public void onClick(DialogInterface dialog, int id)
+                                {
+
+                                }
+                            });
+
+
+                            AlertDialog dialog = builder.create();
+                            dialog.show();
                             Toast.makeText(MainActivity.this, "" + name, Toast.LENGTH_SHORT).show();
                         } catch (JSONException e)
                         {
@@ -94,6 +119,12 @@ public class MainActivity extends ActionBarActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
+        if (id == R.id.alphabeta_menu)
+        {
+            Intent openAlphaBeta = new Intent(this,AlphabetaActivity.class);
+            startActivity(openAlphaBeta);
+        }
+
         if (id == R.id.alphabeta_menu)
         {
             Intent openAlphaBeta = new Intent(this,AlphabetaActivity.class);

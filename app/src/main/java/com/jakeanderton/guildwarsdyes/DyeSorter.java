@@ -1,7 +1,5 @@
 package com.jakeanderton.guildwarsdyes;
 
-import android.util.Log;
-
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -41,14 +39,8 @@ public class DyeSorter
         sortedList = new ArrayList<>(DyeJsonDownloader.dyeObjectList);
         alphabetaSortedList = new ArrayList<>(DyeJsonDownloader.dyeObjectList);
         Collections.sort(sortedList, new CustomComparatorLeather());
-        Log.i("unsorted list first", "" + DyeJsonDownloader.dyeObjectList.get(0).toString());
-        Log.i("sorted list first", "" + sortedList.get(0).toString());
-        Log.i("alpha list first", "" + alphabetaSortedList.get(0).toString());
-        Log.i("-----------------", "------------" );
         Collections.sort(alphabetaSortedList, new CustomComparatorAlphabeta());
-        Log.i("unsorted list first", "" + DyeJsonDownloader.dyeObjectList.get(0).toString());
-        Log.i("sorted list first", "" + sortedList.get(0).toString());
-        Log.i("alpha list first", "" + alphabetaSortedList.get(0).toString());
+
 
         mainActivity.createGridView();
 
