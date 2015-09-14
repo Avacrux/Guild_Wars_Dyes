@@ -19,10 +19,12 @@ import org.json.JSONObject;
 public class ImageAdapter extends BaseAdapter
 {
     private Context mContext;
+    private int mode = 0;
 
-    public ImageAdapter(Context c)
+    public ImageAdapter(Context c,int m)
     {
         mContext = c;
+        mode = m;
     }
 
     @Override
@@ -63,7 +65,22 @@ public class ImageAdapter extends BaseAdapter
 
         try
         {
-            JSONObject jo = (JSONObject) DyeSorter.sortedList.get(position);
+            JSONObject jo;
+            if(mode == 1)//colour order
+            {
+                 jo = (JSONObject) DyeSorter.sortedList.get(position);
+              // Log.i("color order","" +jo.getString("name"));
+
+            }
+            else if(mode == 2)//alphabetical
+            {
+                 jo = (JSONObject) DyeSorter.alphabetaSortedList.get(position);
+            }
+            else
+            {
+                jo = new JSONObject();
+            }
+
            // Log.i("jo printout:", jo.toString());
             JSONObject leather = jo.getJSONObject("leather");
            // Log.i("leather:", leather.toString());

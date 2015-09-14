@@ -1,7 +1,5 @@
 package com.jakeanderton.guildwarsdyes;
 
-import android.util.Log;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -19,7 +17,7 @@ public class CustomComparatorLeather implements Comparator<JSONObject>
         {
              i1 = lhs.getJSONObject("leather").getInt("hue");
              i2 = rhs.getJSONObject("leather").getInt("hue");
-            Log.i("comparing: ", i1 + " " + i2);
+            //Log.i("comparing: ", i1 + " " + i2);
 
 
         } catch (JSONException e)

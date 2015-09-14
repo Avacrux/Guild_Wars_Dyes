@@ -1,5 +1,6 @@
 package com.jakeanderton.guildwarsdyes;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -39,7 +40,7 @@ public class MainActivity extends ActionBarActivity
             public void run()
             {
                 GridView gridView = (GridView) findViewById(R.id.gridView1);
-                final ImageAdapter adapter = new ImageAdapter(MainActivity.this);
+                final ImageAdapter adapter = new ImageAdapter(MainActivity.this,1);
 
                 gridView.setAdapter(adapter);
 
@@ -93,9 +94,10 @@ public class MainActivity extends ActionBarActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings)
+        if (id == R.id.alphabeta_menu)
         {
-            return true;
+            Intent openAlphaBeta = new Intent(this,AlphabetaActivity.class);
+            startActivity(openAlphaBeta);
         }
 
         return super.onOptionsItemSelected(item);
