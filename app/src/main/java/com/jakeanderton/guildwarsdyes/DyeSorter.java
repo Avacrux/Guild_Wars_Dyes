@@ -35,7 +35,7 @@ public class DyeSorter
     private void sortList()
     {
         sortedList = DyeJsonDownloader.dyeObjectList;
-        Collections.sort(sortedList ,new CustomComparator());
+        Collections.sort(sortedList ,new CustomComparatorLeather());
 
         mainActivity.createGridView();
 

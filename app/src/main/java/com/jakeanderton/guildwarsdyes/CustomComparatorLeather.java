@@ -7,7 +7,7 @@ import org.json.JSONObject;
 
 import java.util.Comparator;
 
-public class CustomComparator implements Comparator<JSONObject>
+public class CustomComparatorLeather implements Comparator<JSONObject>
 {
 
     @Override
