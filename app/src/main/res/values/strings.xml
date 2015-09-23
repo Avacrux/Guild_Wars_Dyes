@@ -5,4 +5,6 @@
     <string name="alphabeta_sort_title">Sort By Name</string>
     <string name="title_activity_dye_color">DyeColor</string>
     <string name="title_activity_alphabeta">AlphabetaActivity</string>
+    <string name="title_activity_splash_screen">SplashScreen</string>
+    <string name="action_settings">Settings</string>
 </resources>
